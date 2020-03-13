@@ -5,21 +5,22 @@ const daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"];
 const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
 
 interface ISelection {
- L?: number[];
- M?: number[];
- X?: number[];
- J?: number[];
- V?: number[];
- S?: number[];
- D?: number[];
-};
+  L?: number[];
+  M?: number[];
+  X?: number[];
+  J?: number[];
+  V?: number[];
+  S?: number[];
+  D?: number[];
+}
 
 interface ITimePickerProps {
   selection: ISelection;
   onChange: (newSelection: ISelection) => any;
+  pink?: boolean;
 }
 
-const TimePicker: FC<ITimePickerProps> = ({ selection, onChange }) => {
+const TimePicker: FC<ITimePickerProps> = ({ selection, onChange, pink }) => {
   const onCellClick = (day: string, hour: number) => {
     if (selection[day] && selection[day].includes(hour)) {
       onChange({
@@ -54,6 +55,7 @@ const TimePicker: FC<ITimePickerProps> = ({ selection, onChange }) => {
                   key={`${day}-${hour}`}
                   selected={selection[day] && selection[day].includes(hour)}
                   onClick={() => onCellClick(day, hour)}
+                  pink={pink}
                 ></Cell>
               ))}
             </tr>
@@ -107,7 +109,8 @@ const Table = styled.table`
   }
 `;
 
-const Cell = styled.td<{ selected: boolean }>`
+const Cell = styled.td<{ selected: boolean; pink?: boolean }>`
   cursor: pointer;
-  background-color: ${props => (props.selected ? "#5dc727" : "#fff")};
+  background-color: ${props =>
+    props.selected ? (props.pink ? "#d333a2" : "#5dc727") : "#fff"};
 `;

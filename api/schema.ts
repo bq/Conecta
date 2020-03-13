@@ -15,6 +15,7 @@ const typeDefs = gql`
       isVolunteer: Boolean
       name: String
       phone: String
+      availability: TimeTableInput
     ): String
     login(email: String!, password: String!): String
   }
@@ -25,11 +26,20 @@ const typeDefs = gql`
     name: String
     phone: String
     availability: TimeTable
-    request: TimeTable
     isVolunteer: Boolean
   }
 
   type TimeTable {
+    L: [Int]
+    M: [Int]
+    X: [Int]
+    J: [Int]
+    V: [Int]
+    S: [Int]
+    D: [Int]
+  }
+
+  input TimeTableInput {
     L: [Int]
     M: [Int]
     X: [Int]

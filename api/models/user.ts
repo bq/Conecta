@@ -20,15 +20,6 @@ const UserSchema = new Schema({
     V: [Number],
     S: [Number],
     D: [Number]
-  },
-  request: {
-    L: [Number],
-    M: [Number],
-    X: [Number],
-    J: [Number],
-    V: [Number],
-    S: [Number],
-    D: [Number]
   }
 });
 
