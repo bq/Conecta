@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import styled from "@emotion/styled";
 import Link from 'next/link';
 import Container from "../components/Container";
@@ -8,6 +9,9 @@ import Panel from "../components/Panel";
 
 const Home = () => (
   <Container>
+    <Head>
+      <title>Conecta</title>
+    </Head>
     <Row mt={40} mb={20}>
       <Column width={1}>
         <Header>

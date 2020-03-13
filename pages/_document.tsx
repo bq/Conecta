@@ -8,7 +8,6 @@ export default class BitbloqDocument extends Document {
       <Html>
         <Global styles={baseStyles} />
         <Head>
-          <title>Conecta</title>
           <link rel="icon" href="/favicon.ico" />
           <link
             href="https://fonts.googleapis.com/css?family=Inter:400,500,600&display=swap"
