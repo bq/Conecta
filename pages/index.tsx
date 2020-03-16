@@ -82,26 +82,33 @@ const Home = () => {
           <Column width={1}>
             <Hero>
               Conecta es una aplicación pensada para poner en contacto a gente
-              que necesita ayuda para cuidar a menores o personas dependientes,
-              con personas que se ofrecen voluntarias para cuidar. Regístrate
-              más abajo en la opción correspondiente tanto si te ofreces
-              voluntario, como si quieres solicitar ayuda.
+              que necesita ayuda con personas que se ofrecen voluntarias para
+              ayudar. Regístrate más abajo en la opción correspondiente tanto si
+              te ofreces voluntario, como si quieres solicitar ayuda.
+              <strong>
+                <u>
+                  No te ofrezcas voluntario si crees que puedes estar
+                  contagiado.
+                </u>
+              </strong>
             </Hero>
           </Column>
         </Row>
-        <Row mb={20}>
-          <Column widt={1} mx={"auto"}>
-            <DiagramImage src="/diagram.jpeg" alt="Conecta diagram" />
-          </Column>
-        </Row>
+
         <Row alignItems="stretch" mb={40}>
           <Column width={[1, 1 / 2]} mb={20}>
             <OptionPanel>
               <h2>Quiero ofrecerme voluntario</h2>
               <p>
                 Selecciona esta opción para registrarte como voluntario para
-                cuidar. Deberás rellenar tus datos de contacto y el horario en
-                el que estarías disponible.
+                ayudar a vecinos que lo necesitan. Deberás rellenar tus datos de
+                contacto y el horario en el que estarías disponible.{" "}
+                <strong>
+                  <u>
+                    No te ofrezcas voluntario si crees que puedes estar
+                    contagiado
+                  </u>
+                </strong>
               </p>
               <Link href="/signup/volunteer">
                 <Button>Quiero ofrecerme voluntario</Button>
@@ -114,12 +121,23 @@ const Home = () => {
               <p>
                 Selecciona esta opción para registrarte para solicitar ayuda de
                 algún voluntario. Deberás rellenar tus datos de contacto y el
-                horario en que necesitas ayuda
+                horario en que necesitas ayuda.{" "}
+                <strong>
+                  <u>
+                    Si eres población de riesgo evita el contacto físico con los
+                    voluntarios
+                  </u>
+                </strong>
               </p>
               <Link href="/signup/requester">
-                <Button pink>Necesito ayuda para cuidar</Button>
+                <Button pink>Necesito ayuda</Button>
               </Link>
             </OptionPanel>
+          </Column>
+        </Row>
+        <Row mb={20}>
+          <Column widt={1} mx={"auto"}>
+            <DiagramImage src="/diagram.jpeg" alt="Conecta diagram" />
           </Column>
         </Row>
       </Container>
