@@ -94,6 +94,7 @@ const UserPanel = styled(Panel)`
   }
   h2 {
     margin: 20px 0px;
+    text-align: left;
   }
   p {
     margin: 10px 0px;
