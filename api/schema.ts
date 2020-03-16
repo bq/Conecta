@@ -4,7 +4,6 @@ const typeDefs = gql`
   type Query {
     me: User
     matchUsers: [User]
-    partialMatchUsers: [User]
     allUsers: [User]
   }
 
@@ -18,6 +17,11 @@ const typeDefs = gql`
       availability: TimeTableInput
     ): String
     login(email: String!, password: String!): String
+    updateProfile(
+      name: String
+      phone: String
+      availability: TimeTableInput
+    ): User
   }
 
   type User {

@@ -15,7 +15,8 @@ const resolvers = {
       const user = await UserModel.findOne({ email: context.userEmail });
 
       return {
-        email: user.email
+        email: user.email,
+        isVolunteer: user.isVolunteer
       };
     },
     matchUsers: async (root: any, args: any, context: any) => {
@@ -27,13 +28,31 @@ const resolvers = {
 
       const query = {
         isVolunteer: !user.isVolunteer,
-        availability: {}
       };
       daysOfWeek.forEach(day => {
-        query[day] = { $all: user.availability[day] };
+        if (user.availability[day] && user.availability[day].length) {
+          query[`availability.${day}`] = { $all: user.availability[day] };
+        }
       });
 
       const users = await UserModel.find(query);
+
+      return users.map(u => ({
+        id: u._id,
+        email: u.email,
+        name: u.name,
+        phone: u.phone,
+        availability: u.availability,
+        isVolunteer: u.isVolunteer
+      }));
+    },
+    allUsers: async (root: any, args: any, context: any) => {
+      if (!context || !context.userEmail) {
+        throw new ApolloError("Invalid token", "INVALID_TOKEN");
+      }
+
+      const user = await UserModel.findOne({ email: context.userEmail });
+      const users = await UserModel.find({ isVolunteer: !user.isVolunteer });
 
       return users.map(u => ({
         id: u._id,

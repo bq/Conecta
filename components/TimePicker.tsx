@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styled from "@emotion/styled";
+import { ITimeTable } from "../types";
 
 const daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"];
 const hours = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22];
@@ -15,8 +16,8 @@ interface ISelection {
 }
 
 interface ITimePickerProps {
-  selection: ISelection;
-  onChange: (newSelection: ISelection) => any;
+  selection: ITimeTable;
+  onChange: (newSelection: ITimeTable) => any;
   pink?: boolean;
 }
 
@@ -112,5 +113,5 @@ const Table = styled.table`
 const Cell = styled.td<{ selected: boolean; pink?: boolean }>`
   cursor: pointer;
   background-color: ${props =>
-    props.selected ? (props.pink ? "#d333a2" : "#5dc727") : "#fff"};
+    props.selected ? (props.pink ? "#a61c7b" : "#409912") : "#fff"};
 `;

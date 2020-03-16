@@ -6,22 +6,13 @@ import gql from "graphql-tag";
 import { withApollo } from "../lib/apollo";
 import cookie from "js-cookie";
 
-import Container from "../components/Container";
-import Row from "../components/Row";
-import Column from "../components/Column";
 import Panel from "../components/Panel";
 import Button from "../components/Button";
 import Input from "../components/Input";
 
 const LOGIN_MUTATION = gql`
-  mutation Login(
-    $email: String!
-    $password: String!
-  ) {
-    login(
-      email: $email
-      password: $password
-    )
+  mutation Login($email: String!, $password: String!) {
+    login(email: $email, password: $password)
   }
 `;
 
@@ -41,24 +32,20 @@ const Login = () => {
   };
 
   return (
-    <Container mt={40} mb={40}>
+    <Container>
       <LoginPanel>
-        <Row width={1}>
-          <Column width={[1, 1 / 2]}>
-            <InputGroup>
-              <label>Correo electrónico</label>
-              <Input value={email} onChange={e => setEmail(e.target.value)} />
-            </InputGroup>
-            <InputGroup>
-              <label>Contraseña</label>
-              <Input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-              />
-            </InputGroup>
-          </Column>
-        </Row>
+        <InputGroup>
+          <label>Correo electrónico</label>
+          <Input value={email} onChange={e => setEmail(e.target.value)} />
+        </InputGroup>
+        <InputGroup>
+          <label>Contraseña</label>
+          <Input
+            type="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+          />
+        </InputGroup>
         <Button onClick={() => onLogin()}>Entrar</Button>
       </LoginPanel>
     </Container>
@@ -67,7 +54,22 @@ const Login = () => {
 
 export default withApollo({ ssr: true })(Login);
 
+const Container = styled.div`
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const LoginPanel = styled(Panel)`
+  max-width: 300px;
+  width: 100%;
+  margin: 10px;
+
   h1 {
     font-size: 20px;
     text-align: center;

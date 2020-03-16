@@ -42,7 +42,7 @@ const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
   height: 40px;
-  margin: 20px 0px;
+  margin: 20px auto;
 
   h1 {
     flex: 1;

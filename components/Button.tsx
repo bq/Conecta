@@ -21,10 +21,10 @@ const Button = styled.button<ButtonProps>`
 
   background-color: ${props => {
     if (props.pink) {
-      return "#d333a2";
+      return "#a1287c";
     }
 
-    return "#5dc727";
+    return "#409912";
   }};
 
   &[disabled] {
