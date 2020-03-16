@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import { UserModel } from "./models/user";
 
-const daysOfWeek = ["L","M","X","J","V","S","D"];
+const daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"];
 
 const resolvers = {
   Query: {
@@ -42,6 +42,7 @@ const resolvers = {
         email: u.email,
         name: u.name,
         phone: u.phone,
+        dni: u.dni,
         availability: u.availability,
         isVolunteer: u.isVolunteer
       }));
@@ -70,15 +71,18 @@ const resolvers = {
         email: args.email
       });
       if (!user) {
-        throw new ApolloError("Email or password incorrect", "WRONG_EMAIL_OR_PASSWORD");
+        throw new ApolloError(
+          "Email or password incorrect",
+          "WRONG_EMAIL_OR_PASSWORD"
+        );
       }
 
-      const valid: boolean = await bcrypt.compare(
-        args.password,
-        user.password
-      );
+      const valid: boolean = await bcrypt.compare(args.password, user.password);
       if (!valid) {
-        throw new ApolloError("Email or password incorrect", "WRONG_EMAIL_OR_PASSWORD");
+        throw new ApolloError(
+          "Email or password incorrect",
+          "WRONG_EMAIL_OR_PASSWORD"
+        );
       }
 
       return jwt.sign({ userEmail: user.email }, process.env.JWT_SECRET);
@@ -98,6 +102,7 @@ const resolvers = {
         isVolunteer: args.isVolunteer,
         name: args.name,
         phone: args.phone,
+        dni: args.dni,
         availability: args.availability
       });
 

@@ -21,6 +21,7 @@ const SIGNUP_MUTATION = gql`
     $isVolunteer: Boolean
     $name: String
     $phone: String
+    $dni: String
     $availability: TimeTableInput
   ) {
     signUp(
@@ -29,6 +30,7 @@ const SIGNUP_MUTATION = gql`
       isVolunteer: $isVolunteer
       name: $name
       phone: $phone
+      dni: $dni
       availability: $availability
     )
   }
@@ -43,6 +45,7 @@ const Signup = () => {
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [dni, setDNI] = useState("");
   const [signUp, { loading }] = useMutation(SIGNUP_MUTATION);
 
   const onSignup = async () => {
@@ -53,6 +56,7 @@ const Signup = () => {
           password,
           name,
           phone,
+          dni,
           isVolunteer: type === "volunteer",
           availability: timeSelection
         }
@@ -90,6 +94,10 @@ const Signup = () => {
             <InputGroup>
               <label>Teléfono</label>
               <Input value={phone} onChange={e => setPhone(e.target.value)} />
+            </InputGroup>
+            <InputGroup>
+              <label>DNI</label>
+              <Input value={dni} onChange={e => setDNI(e.target.value)} />
             </InputGroup>
           </Column>
         </Row>
