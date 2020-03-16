@@ -10,6 +10,10 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  dni: {
+    type: String,
+    required: true
+  },
   isVolunteer: Boolean,
   name: String,
   availability: {

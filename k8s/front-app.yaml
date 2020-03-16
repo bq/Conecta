@@ -1,0 +1,112 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-app
+  labels:
+    name: front-app
+  namespace: conecta
+  selfLink: /apis/apps/v1/namespaces/conecta/deployments/front-app
+spec:
+  minReadySeconds: 60
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 5
+  selector:
+    matchLabels:
+      app: front-app
+      name: front-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 3
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: front-app
+        date: "1552027197"
+        name: front-app
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: name
+                      operator: In
+                      values:
+                        - front-app
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      containers:
+        - image: eu.gcr.io/bmaker/conecta:lr
+          imagePullPolicy: Always
+          name: front-app
+          ports:
+            - containerPort: 80
+              name: nextjs
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 400m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /root/config/
+              name: config
+          tty: true
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: config
+          secret:
+            defaultMode: 420
+            secretName: front-app
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: front-app
+  name: front-app
+  namespace: conecta
+  selfLink: /api/v1/namespaces/conecta/services/front-app
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 3000
+  selector:
+    name: front-app
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/service-upstream: "true"
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/redirect-entry-point: https
+  generation: 1
+  name: front-app
+  namespace: conecta
+  selfLink: /apis/extensions/v1beta1/namespaces/conecta/ingresses/front-app
+spec:
+  rules:
+    - host: xdrf.bq.com
+      http:
+        paths:
+          - backend:
+              serviceName: front-app
+              servicePort: 80
+            path: /
