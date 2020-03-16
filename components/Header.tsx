@@ -27,7 +27,11 @@ const Header: FC<IHeaderProps> = ({ email, hideLogin }) => {
       </h1>
       {email && (
         <LoginContainer>
-          {email} <HeaderButton onClick={onLogout}>Salir</HeaderButton>
+          {email}{" "}
+          <HeaderButton onClick={() => Router.push("/profile")}>
+            Cambiar mis datos
+          </HeaderButton>{" "}
+          <HeaderButton onClick={onLogout}>Salir</HeaderButton>
         </LoginContainer>
       )}
       {!email && !hideLogin && (

@@ -16,6 +16,7 @@ const UserSchema = new Schema({
   },
   isVolunteer: Boolean,
   name: String,
+  phone: String,
   availability: {
     L: [Number],
     M: [Number],

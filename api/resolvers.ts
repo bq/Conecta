@@ -15,7 +15,11 @@ const resolvers = {
       const user = await UserModel.findOne({ email: context.userEmail });
 
       return {
+        id: user._id,
         email: user.email,
+        name: user.name,
+        phone: user.phone,
+        availability: user.availability,
         isVolunteer: user.isVolunteer
       };
     },
@@ -27,7 +31,7 @@ const resolvers = {
       const user = await UserModel.findOne({ email: context.userEmail });
 
       const query = {
-        isVolunteer: !user.isVolunteer,
+        isVolunteer: !user.isVolunteer
       };
       daysOfWeek.forEach(day => {
         if (user.availability[day] && user.availability[day].length) {
@@ -107,6 +111,29 @@ const resolvers = {
 
       const newUser = await UserModel.create(user);
       return jwt.sign({ userEmail: newUser.email }, process.env.JWT_SECRET);
+    },
+    updateProfile: async (root: any, args: any, context: any) => {
+      if (!context || !context.userEmail) {
+        throw new ApolloError("Invalid token", "INVALID_TOKEN");
+      }
+
+      const user = await UserModel.findOneAndUpdate(
+        { email: context.userEmail },
+        {
+          name: args.name,
+          phone: args.phone,
+          availability: args.availability
+        }
+      );
+
+      return {
+        id: user._id,
+        email: user.email,
+        name: user.name,
+        phone: user.phone,
+        availability: user.availability,
+        isVolunteer: user.isVolunteer
+      };
     }
   }
 };

@@ -16,36 +16,7 @@ import Panel from "../components/Panel";
 import Header from "../components/Header";
 import UserTable from "../components/UserTable";
 
-const ME_QUERY = gql`
-  query Me {
-    me {
-      email
-      isVolunteer
-    }
-  }
-`;
-
-const MATCH_USERS_QUERY = gql`
-  query MatchUsers {
-    matchUsers {
-      id
-      name
-      email
-      phone
-    }
-  }
-`;
-
-const ALL_USERS_QUERY = gql`
-  query AllUsers {
-    allUsers {
-      id
-      name
-      email
-      phone
-    }
-  }
-`;
+import { ME_QUERY, MATCH_USERS_QUERY, ALL_USERS_QUERY } from "../queries";
 
 const Home = () => {
   const [showAllUsers, setShowAllUsers] = useState(false);

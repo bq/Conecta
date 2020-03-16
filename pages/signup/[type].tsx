@@ -74,16 +74,17 @@ const Signup = () => {
       <Header />
       <Container mt={40} mb={40}>
         <SignupPanel>
-          <h1>Registrarse para ofrecer cuidar</h1>
+          {type === "volunteer" && <h1>Registrarse como voluntario</h1>}
+          {type !== "volunteer" && <h1>Registrarse para pedir ayuda</h1>}
           <h2>Datos personales</h2>
           <Row width={1}>
             <Column width={[1, 1 / 2]}>
               <InputGroup>
-                <label>Correo electrónico</label>
+                <label>Correo electrónico (Obligatorio)</label>
                 <Input value={email} onChange={e => setEmail(e.target.value)} />
               </InputGroup>
               <InputGroup>
-                <label>Contraseña</label>
+                <label>Contraseña (Obligatorio)</label>
                 <Input
                   type="password"
                   value={password}
@@ -99,12 +100,12 @@ const Signup = () => {
                 <Input value={phone} onChange={e => setPhone(e.target.value)} />
               </InputGroup>
               <InputGroup>
-                <label>DNI</label>
+                <label>DNI (Obligatorio)</label>
                 <Input value={dni} onChange={e => setDNI(e.target.value)} />
               </InputGroup>
             </Column>
           </Row>
-          <h2>Marcar disponibilidad</h2>
+          <h2>Marcar horario de ayuda</h2>
           <Row>
             <Column width={1}>
               <TimePicker
@@ -116,7 +117,11 @@ const Signup = () => {
           </Row>
           <Row mt={40} mb={20}>
             <Column width={1}>
-              <Button onClick={() => onSignup()} pink={type === "requester"}>
+              <Button
+                onClick={() => onSignup()}
+                pink={type === "requester"}
+                disabled={(!dni || !email || !password)}
+              >
                 Registrarse
               </Button>
             </Column>
