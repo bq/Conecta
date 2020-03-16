@@ -185,7 +185,7 @@ const OptionPanel = styled(Panel)`
 
 const UsersContainer = styled(Container)`
   h2 {
-    margin-bottom: 20px;
+    margin: 20px 0px;
   }
   button {
     margin-top: 20px;

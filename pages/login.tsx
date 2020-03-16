@@ -6,6 +6,7 @@ import gql from "graphql-tag";
 import { withApollo } from "../lib/apollo";
 import cookie from "js-cookie";
 
+import Header from "../components/Header";
 import Panel from "../components/Panel";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -32,27 +33,38 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <LoginPanel>
-        <InputGroup>
-          <label>Correo electrónico</label>
-          <Input value={email} onChange={e => setEmail(e.target.value)} />
-        </InputGroup>
-        <InputGroup>
-          <label>Contraseña</label>
-          <Input
-            type="password"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
-          />
-        </InputGroup>
-        <Button onClick={() => onLogin()}>Entrar</Button>
-      </LoginPanel>
-    </Container>
+    <>
+      <Container>
+        <LoginPanel>
+          <InputGroup>
+            <label>Correo electrónico</label>
+            <Input value={email} onChange={e => setEmail(e.target.value)} />
+          </InputGroup>
+          <InputGroup>
+            <label>Contraseña</label>
+            <Input
+              type="password"
+              value={password}
+              onChange={e => setPassword(e.target.value)}
+            />
+          </InputGroup>
+          <Button onClick={() => onLogin()}>Entrar</Button>
+        </LoginPanel>
+      </Container>
+      <HeaderWrap>
+        <Header hideLogin />
+      </HeaderWrap>
+    </>
   );
 };
 
 export default withApollo({ ssr: true })(Login);
+
+const HeaderWrap = styled.div`
+  position: absolute;
+  top: 0px;
+  width: 100%;
+`;
 
 const Container = styled.div`
   position: absolute;

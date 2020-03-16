@@ -42,7 +42,6 @@ const resolvers = {
         email: u.email,
         name: u.name,
         phone: u.phone,
-        dni: u.dni,
         availability: u.availability,
         isVolunteer: u.isVolunteer
       }));

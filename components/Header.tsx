@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Link from "next/link";
 import Router from "next/router";
 import styled from "@emotion/styled";
 import cookie from "js-cookie";
@@ -8,9 +9,10 @@ import Button from "../components/Button";
 
 interface IHeaderProps {
   email?: string;
+  hideLogin?: boolean;
 }
 
-const Header: FC<IHeaderProps> = ({ email }) => {
+const Header: FC<IHeaderProps> = ({ email, hideLogin }) => {
   const onLogout = () => {
     cookie.set("token", "");
     window.location.href = "/";
@@ -18,13 +20,17 @@ const Header: FC<IHeaderProps> = ({ email }) => {
 
   return (
     <HeaderContainer>
-      <h1>Conecta</h1>
+      <h1>
+        <Link href="/">
+          <a>Conecta</a>
+        </Link>
+      </h1>
       {email && (
         <LoginContainer>
           {email} <HeaderButton onClick={onLogout}>Salir</HeaderButton>
         </LoginContainer>
       )}
-      {!email && (
+      {!email && !hideLogin && (
         <LoginContainer>
           ¿Ya estás registrado?{" "}
           <HeaderButton onClick={() => Router.push("/login")}>
@@ -47,6 +53,10 @@ const HeaderContainer = styled(Container)`
   h1 {
     flex: 1;
     text-transform: uppercase;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
 `;
 

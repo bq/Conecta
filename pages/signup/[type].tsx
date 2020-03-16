@@ -13,6 +13,7 @@ import Column from "../../components/Column";
 import Panel from "../../components/Panel";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import Header from "../../components/Header";
 
 const SIGNUP_MUTATION = gql`
   mutation Signup(
@@ -69,57 +70,60 @@ const Signup = () => {
   };
 
   return (
-    <Container mt={40} mb={40}>
-      <SignupPanel>
-        <h1>Registrarse para ofrecer cuidar</h1>
-        <h2>Datos personales</h2>
-        <Row width={1}>
-          <Column width={[1, 1 / 2]}>
-            <InputGroup>
-              <label>Correo electrónico</label>
-              <Input value={email} onChange={e => setEmail(e.target.value)} />
-            </InputGroup>
-            <InputGroup>
-              <label>Contraseña</label>
-              <Input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
+    <>
+      <Header />
+      <Container mt={40} mb={40}>
+        <SignupPanel>
+          <h1>Registrarse para ofrecer cuidar</h1>
+          <h2>Datos personales</h2>
+          <Row width={1}>
+            <Column width={[1, 1 / 2]}>
+              <InputGroup>
+                <label>Correo electrónico</label>
+                <Input value={email} onChange={e => setEmail(e.target.value)} />
+              </InputGroup>
+              <InputGroup>
+                <label>Contraseña</label>
+                <Input
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                />
+              </InputGroup>
+              <InputGroup>
+                <label>Nombre</label>
+                <Input value={name} onChange={e => setName(e.target.value)} />
+              </InputGroup>
+              <InputGroup>
+                <label>Teléfono</label>
+                <Input value={phone} onChange={e => setPhone(e.target.value)} />
+              </InputGroup>
+              <InputGroup>
+                <label>DNI</label>
+                <Input value={dni} onChange={e => setDNI(e.target.value)} />
+              </InputGroup>
+            </Column>
+          </Row>
+          <h2>Marcar disponibilidad</h2>
+          <Row>
+            <Column width={1}>
+              <TimePicker
+                selection={timeSelection}
+                onChange={setTimeSelection}
+                pink={type === "requester"}
               />
-            </InputGroup>
-            <InputGroup>
-              <label>Nombre</label>
-              <Input value={name} onChange={e => setName(e.target.value)} />
-            </InputGroup>
-            <InputGroup>
-              <label>Teléfono</label>
-              <Input value={phone} onChange={e => setPhone(e.target.value)} />
-            </InputGroup>
-            <InputGroup>
-              <label>DNI</label>
-              <Input value={dni} onChange={e => setDNI(e.target.value)} />
-            </InputGroup>
-          </Column>
-        </Row>
-        <h2>Marcar disponibilidad</h2>
-        <Row>
-          <Column width={1}>
-            <TimePicker
-              selection={timeSelection}
-              onChange={setTimeSelection}
-              pink={type === "requester"}
-            />
-          </Column>
-        </Row>
-        <Row mt={40} mb={20}>
-          <Column width={1}>
-            <Button onClick={() => onSignup()} pink={type === "requester"}>
-              Registrarse
-            </Button>
-          </Column>
-        </Row>
-      </SignupPanel>
-    </Container>
+            </Column>
+          </Row>
+          <Row mt={40} mb={20}>
+            <Column width={1}>
+              <Button onClick={() => onSignup()} pink={type === "requester"}>
+                Registrarse
+              </Button>
+            </Column>
+          </Row>
+        </SignupPanel>
+      </Container>
+    </>
   );
 };
 
