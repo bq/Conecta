@@ -25,6 +25,15 @@ const UserSchema = new Schema({
     V: [Number],
     S: [Number],
     D: [Number]
+  },
+  services: {
+    childCare: Boolean,
+    shopping: Boolean,
+    pharmacy: Boolean,
+    laundry: Boolean,
+    call: Boolean,
+    other: Boolean,
+    otherText: String
   }
 });
 

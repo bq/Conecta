@@ -89,7 +89,12 @@ const Home = () => {
             </Hero>
           </Column>
         </Row>
-        <Row alignItems="stretch">
+        <Row mb={20}>
+          <Column widt={1} mx={"auto"}>
+            <DiagramImage src="/diagram.jpeg" alt="Conecta diagram" />
+          </Column>
+        </Row>
+        <Row alignItems="stretch" mb={40}>
           <Column width={[1, 1 / 2]} mb={20}>
             <OptionPanel>
               <h2>Quiero ofrecerme voluntario</h2>
@@ -164,4 +169,9 @@ const UsersContainer = styled(Container)`
   p {
     margin-bottom: 20px;
   }
+`;
+
+const DiagramImage = styled.img`
+  max-width: 100%;
+  max-height: 400px;
 `;

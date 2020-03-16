@@ -14,6 +14,8 @@ import Panel from "../../components/Panel";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
 import Header from "../../components/Header";
+import Checkbox from "../../components/Checkbox";
+import ServicesChecklist from "../../components/ServicesChecklist";
 
 const SIGNUP_MUTATION = gql`
   mutation Signup(
@@ -24,6 +26,7 @@ const SIGNUP_MUTATION = gql`
     $phone: String
     $dni: String
     $availability: TimeTableInput
+    $services: ServicesInput
   ) {
     signUp(
       email: $email
@@ -33,6 +36,7 @@ const SIGNUP_MUTATION = gql`
       phone: $phone
       dni: $dni
       availability: $availability
+      services: $services
     )
   }
 `;
@@ -41,6 +45,7 @@ const Signup = () => {
   const router = useRouter();
   const { type } = router.query;
 
+  const [services, setServices] = useState({});
   const [timeSelection, setTimeSelection] = useState({});
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -48,6 +53,7 @@ const Signup = () => {
   const [phone, setPhone] = useState("");
   const [dni, setDNI] = useState("");
   const [signUp, { loading }] = useMutation(SIGNUP_MUTATION);
+  const [acceptTerms, setAcceptTerms] = useState(false);
 
   const onSignup = async () => {
     try {
@@ -59,7 +65,8 @@ const Signup = () => {
           phone,
           dni,
           isVolunteer: type === "volunteer",
-          availability: timeSelection
+          availability: timeSelection,
+          services
         }
       });
       cookie.set("token", result.data.signUp);
@@ -105,6 +112,13 @@ const Signup = () => {
               </InputGroup>
             </Column>
           </Row>
+          {type === "volunteer" && <h2>Servicios que ofrezco</h2>}
+          {type !== "volunteer" && <h2>Servicios que necesito</h2>}
+          <Row width={1}>
+            <Column width={[1, 1 / 2]}>
+              <ServicesChecklist services={services} onChange={setServices} />
+            </Column>
+          </Row>
           <h2>Marcar horario de ayuda</h2>
           <Row>
             <Column width={1}>
@@ -115,12 +129,70 @@ const Signup = () => {
               />
             </Column>
           </Row>
+          <Row>
+            <Column width={1}>
+              <Terms>
+                <h3>Aviso Legal</h3>
+                <p>
+                  En cumplimiento del deber de informar que establece la
+                  normativa vigente en materia de Protección de Datos Personales
+                  (Reglamento Europeo 2016/679, de 27 de abril de 2016, de
+                  Protección de Datos Personales) le proporcionamos la siguiente
+                  información:
+                </p>
+                <p>
+                  La información sobre protección de datos de carácter personal
+                  de los usuarios de la Concejalía de Innovación, Educación,
+                  Economía y Empleo será tratada de conformidad con la normativa
+                  de Protección de Datos Personales (Reglamento Europeo
+                  2016/679, de 27 de abril de 2016, de Protección de Datos
+                  Personales)
+                </p>
+                <p>
+                  Información Protección de Datos: Ayuntamiento de Las Rozas,
+                  Plaza Mayor 1. Correo electrónico:
+                  solicitudesARCO@lasrozas.es.
+                </p>
+                <p>FINALIDAD:</p>
+                <p>
+                  Elaboración de un directorio de empresas de Las Rozas.
+                  <br />
+                  Remitirle informaciones relacionadas con las actividades y
+                  servicios del Ayuntamiento de Las Rozas en el ámbito de la
+                  Educación, Cultura, Empleo, Emprendimiento, Innovación
+                  inclusive por medios electrónicos.
+                </p>
+                <p>LEGITIMACIÓN: Consentimiento del interesado.</p>
+                <p>CESIONES: No se contemplan.</p>
+                <p>
+                  CONSERVACIÓN: Durante la relación contractual y/o hasta que
+                  nos solicite la baja y, durante los plazos exigidos por ley
+                  para atender eventuales responsabilidades finalizada la
+                  relación.
+                </p>
+                <p>
+                  DERECHOS: Puede ejercer su derecho de acceso, rectificación,
+                  supresión, portabilidad de sus datos y la limitación u
+                  oposición en las direcciones indicadas. En caso de
+                  divergencias, puede presentar una reclamación ante las
+                  autoridades de protección de datos (Agencia Española de
+                  Protección de Datos mediante escrito C/ Jorge Juan, 6,
+                  28001-Madrid o formulario en su Sede electrónica.)
+                </p>
+              </Terms>
+              <TermsCheckbox
+                label="Acepto las condiciones"
+                checked={acceptTerms}
+                onChange={checked => setAcceptTerms(checked)}
+              />
+            </Column>
+          </Row>
           <Row mt={40} mb={20}>
             <Column width={1}>
               <Button
                 onClick={() => onSignup()}
                 pink={type === "requester"}
-                disabled={(!dni || !email || !password)}
+                disabled={!dni || !email || !password || !acceptTerms}
               >
                 Registrarse
               </Button>
@@ -155,4 +227,27 @@ const InputGroup = styled.div`
     display: block;
     margin-bottom: 8px;
   }
+`;
+
+const Terms = styled.div`
+  width: 100%;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+  height: 300px;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  margin-top: 40px;
+
+  h3 {
+    margin: 10px 0px;
+  }
+  p {
+    margin: 10px 0px;
+  }
+`;
+
+const TermsCheckbox = styled(Checkbox)`
+  margin: 20px 10px;
 `;

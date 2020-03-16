@@ -15,3 +15,13 @@ export interface IUser {
   phone: string;
   availability: ITimeTable;
 }
+
+export interface IServices {
+  childCare?: boolean;
+  shopping?: boolean;
+  pharmacy?: boolean;
+  laundry?: boolean;
+  call?: boolean;
+  other?: boolean;
+  otherText?: string;
+}

@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Router from "next/router";
 import styled from "@emotion/styled";
 import { IUser } from "../types";
 
@@ -19,7 +20,12 @@ const UserTable: FC<IUserTableProps> = ({ users }) => {
         </thead>
         <tbody>
           {users.map(user => (
-            <tr key={user.id}>
+            <tr
+              key={user.id}
+              onClick={() =>
+                Router.push(`/user/${encodeURIComponent(user.email)}`)
+              }
+            >
               <td>{user.email}</td>
               <td>{user.name}</td>
               <td>{user.phone}</td>
@@ -64,6 +70,9 @@ const Table = styled.table`
   }
 
   tbody {
+    tr {
+      cursor: pointer;
+    }
     tr:last-of-type td {
       border-bottom: none;
     }

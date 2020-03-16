@@ -19,7 +19,21 @@ const resolvers = {
         email: user.email,
         name: user.name,
         phone: user.phone,
+        dni: user.dni,
         availability: user.availability,
+        services: user.services,
+        isVolunteer: user.isVolunteer
+      };
+    },
+    getUser: async (root: any, args: any, context: any) => {
+      const user = await UserModel.findOne({ email: args.email });
+
+      return {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        availability: user.availability,
+        services: user.services,
         isVolunteer: user.isVolunteer
       };
     },
@@ -35,7 +49,7 @@ const resolvers = {
       };
       daysOfWeek.forEach(day => {
         if (user.availability[day] && user.availability[day].length) {
-          query[`availability.${day}`] = { $all: user.availability[day] };
+          query[`availability.${day}`] = { $in: user.availability[day] };
         }
       });
 
@@ -47,6 +61,7 @@ const resolvers = {
         name: u.name,
         phone: u.phone,
         availability: u.availability,
+        services: args.services,
         isVolunteer: u.isVolunteer
       }));
     },
@@ -64,6 +79,7 @@ const resolvers = {
         name: u.name,
         phone: u.phone,
         availability: u.availability,
+        services: args.services,
         isVolunteer: u.isVolunteer
       }));
     }
@@ -106,7 +122,8 @@ const resolvers = {
         name: args.name,
         phone: args.phone,
         dni: args.dni,
-        availability: args.availability
+        availability: args.availability,
+        services: args.services
       });
 
       const newUser = await UserModel.create(user);
@@ -122,7 +139,9 @@ const resolvers = {
         {
           name: args.name,
           phone: args.phone,
-          availability: args.availability
+          availability: args.availability,
+          dni: args.dni,
+          services: args.services
         }
       );
 
@@ -132,6 +151,7 @@ const resolvers = {
         name: user.name,
         phone: user.phone,
         availability: user.availability,
+        services: args.services,
         isVolunteer: user.isVolunteer
       };
     }

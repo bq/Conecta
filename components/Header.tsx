@@ -5,6 +5,8 @@ import styled from "@emotion/styled";
 import cookie from "js-cookie";
 
 import Container from "../components/Container";
+import Row from "../components/Row";
+import Column from "../components/Column";
 import Button from "../components/Button";
 
 interface IHeaderProps {
@@ -20,28 +22,36 @@ const Header: FC<IHeaderProps> = ({ email, hideLogin }) => {
 
   return (
     <HeaderContainer>
-      <h1>
-        <Link href="/">
-          <a>Conecta</a>
-        </Link>
-      </h1>
-      {email && (
-        <LoginContainer>
-          {email}{" "}
-          <HeaderButton onClick={() => Router.push("/profile")}>
-            Cambiar mis datos
-          </HeaderButton>{" "}
-          <HeaderButton onClick={onLogout}>Salir</HeaderButton>
-        </LoginContainer>
-      )}
-      {!email && !hideLogin && (
-        <LoginContainer>
-          ¿Ya estás registrado?{" "}
-          <HeaderButton onClick={() => Router.push("/login")}>
-            Entrar
-          </HeaderButton>
-        </LoginContainer>
-      )}
+      <Row width={1} mt={20}>
+        <Column width={[1, 1 / 2]} mb={20}>
+          <h1>
+            <Link href="/">
+              <a>
+                <img src="/logo_header.jpeg" alt="Las Rozas Conecta"></img>
+              </a>
+            </Link>
+          </h1>
+        </Column>
+        <LoginColumn width={[1, 1 / 2]} mb={20}>
+          {email && (
+            <LoginContainer>
+              {email}{" "}
+              <HeaderButton onClick={() => Router.push("/profile")}>
+                Cambiar mis datos
+              </HeaderButton>{" "}
+              <HeaderButton onClick={onLogout}>Salir</HeaderButton>
+            </LoginContainer>
+          )}
+          {!email && !hideLogin && (
+            <LoginContainer>
+              ¿Ya estás registrado?{" "}
+              <HeaderButton onClick={() => Router.push("/login")}>
+                Entrar
+              </HeaderButton>
+            </LoginContainer>
+          )}
+        </LoginColumn>
+      </Row>
     </HeaderContainer>
   );
 };
@@ -51,8 +61,7 @@ export default Header;
 const HeaderContainer = styled(Container)`
   display: flex;
   align-items: center;
-  height: 40px;
-  margin: 20px auto;
+  margin: 0px auto;
 
   h1 {
     flex: 1;
@@ -61,7 +70,17 @@ const HeaderContainer = styled(Container)`
       text-decoration: none;
       color: inherit;
     }
+
+    img {
+      height: 60px;
+      max-width: 100%;
+    }
   }
+`;
+
+const LoginColumn = styled(Column)`
+  display: flex;
+  justify-content: flex-end;
 `;
 
 const LoginContainer = styled.div`

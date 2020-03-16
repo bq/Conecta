@@ -29,6 +29,7 @@ const Button = styled.button<ButtonProps>`
 
   &[disabled] {
     cursor: not-allowed;
+    background-color: #ccc;
   }
 `;
 

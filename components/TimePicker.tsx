@@ -17,12 +17,15 @@ interface ISelection {
 
 interface ITimePickerProps {
   selection: ITimeTable;
-  onChange: (newSelection: ITimeTable) => any;
+  onChange?: (newSelection: ITimeTable) => any;
   pink?: boolean;
 }
 
 const TimePicker: FC<ITimePickerProps> = ({ selection, onChange, pink }) => {
   const onCellClick = (day: string, hour: number) => {
+    if (!onChange) {
+      return;
+    }
     if (selection[day] && selection[day].includes(hour)) {
       onChange({
         ...selection,
@@ -56,6 +59,7 @@ const TimePicker: FC<ITimePickerProps> = ({ selection, onChange, pink }) => {
                   key={`${day}-${hour}`}
                   selected={selection[day] && selection[day].includes(hour)}
                   onClick={() => onCellClick(day, hour)}
+                  editable={!!onChange}
                   pink={pink}
                 ></Cell>
               ))}
@@ -110,8 +114,12 @@ const Table = styled.table`
   }
 `;
 
-const Cell = styled.td<{ selected: boolean; pink?: boolean }>`
-  cursor: pointer;
+const Cell = styled.td<{
+  selected: boolean;
+  pink?: boolean;
+  editable?: boolean;
+}>`
+  cursor: ${props => (props.editable ? "pointer" : "default")};
   background-color: ${props =>
     props.selected ? (props.pink ? "#a61c7b" : "#409912") : "#fff"};
 `;

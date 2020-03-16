@@ -29,6 +29,7 @@
     "next-cookies": "^2.0.3",
     "react": "16.13.0",
     "react-dom": "16.13.0",
+    "reakit": "^1.0.0-beta.16",
     "rebass": "^4.0.7"
   },
   "devDependencies": {

@@ -5,6 +5,7 @@ const typeDefs = gql`
     me: User
     matchUsers: [User]
     allUsers: [User]
+    getUser(email: String!): User
   }
 
   type Mutation {
@@ -14,14 +15,17 @@ const typeDefs = gql`
       isVolunteer: Boolean
       name: String
       phone: String
-      dni: String
+      dni: String!
       availability: TimeTableInput
+      services: ServicesInput
     ): String
     login(email: String!, password: String!): String
     updateProfile(
       name: String
       phone: String
-      availability: TimeTableInput
+      dni: String
+      availability: TimeTableInput,
+      services: ServicesInput
     ): User
   }
 
@@ -33,6 +37,7 @@ const typeDefs = gql`
     dni: String
     availability: TimeTable
     isVolunteer: Boolean
+    services: Services
   }
 
   type TimeTable {
@@ -53,6 +58,26 @@ const typeDefs = gql`
     V: [Int]
     S: [Int]
     D: [Int]
+  }
+
+  type Services {
+    childCare: Boolean
+    shopping: Boolean
+    pharmacy: Boolean
+    laundry: Boolean
+    call: Boolean
+    other: Boolean
+    otherText: String
+  }
+
+  input ServicesInput {
+    childCare: Boolean
+    shopping: Boolean
+    pharmacy: Boolean
+    laundry: Boolean
+    call: Boolean
+    other: Boolean
+    otherText: String
   }
 `;
 

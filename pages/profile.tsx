@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { withApollo } from "../lib/apollo";
 
+import ServicesChecklist from "../components/ServicesChecklist";
 import TimePicker from "../components/TimePicker";
 import Container from "../components/Container";
 import Row from "../components/Row";
@@ -25,7 +26,9 @@ const Profile = () => {
   const { loading, error, data: userData } = useQuery(ME_QUERY);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [dni, setDNI] = useState("");
   const [timeSelection, setTimeSelection] = useState({});
+  const [services, setServices] = useState({});
   const [updateProfile, { loading: updateLoading }] = useMutation(
     UPDATE_PROFILE_MUTATION,
     {
@@ -43,8 +46,27 @@ const Profile = () => {
     if (me) {
       setName(me.name || "");
       setPhone(me.phone || "");
+      setDNI(me.dni || "");
       const { L, M, X, J, V, S, D } = me.availability;
       setTimeSelection({ L, M, X, J, V, S, D });
+      const {
+        childCare,
+        shopping,
+        pharmacy,
+        laundry,
+        call,
+        other,
+        otherText
+      } = me.services || {};
+      setServices({
+        childCare,
+        shopping,
+        pharmacy,
+        laundry,
+        call,
+        other,
+        otherText
+      });
     }
   }, [me]);
 
@@ -58,6 +80,8 @@ const Profile = () => {
         variables: {
           name,
           phone,
+          dni,
+          services,
           availability: timeSelection
         }
       });
@@ -84,9 +108,18 @@ const Profile = () => {
                 <label>Teléfono</label>
                 <Input value={phone} onChange={e => setPhone(e.target.value)} />
               </InputGroup>
+              <InputGroup>
+                <label>DNI (Obligatorio)</label>
+                <Input value={dni} onChange={e => setDNI(e.target.value)} />
+              </InputGroup>
             </Column>
           </Row>
           <h2>Marcar horario de ayuda</h2>
+          <Row width={1}>
+            <Column width={[1, 1 / 2]}>
+              <ServicesChecklist services={services} onChange={setServices} />
+            </Column>
+          </Row>
           <Row>
             <Column width={1}>
               <TimePicker
