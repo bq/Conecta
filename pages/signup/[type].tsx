@@ -24,7 +24,7 @@ const SIGNUP_MUTATION = gql`
     $isVolunteer: Boolean
     $name: String
     $phone: String
-    $dni: String
+    $dni: String!
     $availability: TimeTableInput
     $services: ServicesInput
   ) {
