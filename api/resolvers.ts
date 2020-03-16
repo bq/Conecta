@@ -4,6 +4,14 @@ import bcrypt from "bcrypt";
 import { UserModel } from "./models/user";
 
 const daysOfWeek = ["L", "M", "X", "J", "V", "S", "D"];
+const services = [
+  "childCare",
+  "shopping",
+  "pharmacy",
+  "laundry",
+  "call",
+  "other"
+];
 
 const resolvers = {
   Query: {
@@ -44,16 +52,39 @@ const resolvers = {
 
       const user = await UserModel.findOne({ email: context.userEmail });
 
-      const query = {
-        isVolunteer: !user.isVolunteer
-      };
+      const availabilityConditions = [];
       daysOfWeek.forEach(day => {
         if (user.availability[day] && user.availability[day].length) {
-          query[`availability.${day}`] = { $in: user.availability[day] };
+          const key = `availability.${day}`;
+          availabilityConditions.push({
+            [key]: { $in: user.availability[day] }
+          });
+        }
+      });
+      const serviceConditions = [];
+      services.forEach(service => {
+        if (user.services[service]) {
+          const key = `services.${service}`;
+          serviceConditions.push({
+            [key]: true
+          });
         }
       });
 
-      const users = await UserModel.find(query);
+      const query = {
+        $and: [{ isVolunteer: !user.isVolunteer }]
+      };
+      const conditions = [];
+      conditions.push({ isVolunteer: !user.isVolunteer });
+      if (availabilityConditions.length) {
+        conditions.push({ $or: availabilityConditions });
+      }
+      if (serviceConditions.length) {
+        conditions.push({ $or: serviceConditions });
+      }
+      const users = await UserModel.find({
+        $and: conditions
+      });
 
       return users.map(u => ({
         id: u._id,
