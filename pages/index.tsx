@@ -120,8 +120,9 @@ const Home = () => {
               <h2>Solicitar ayuda</h2>
               <p>
                 Selecciona esta opción para registrarte para solicitar ayuda de
-                algún voluntario. Deberás rellenar tus datos de contacto y el
-                horario en que necesitas ayuda.{" "}
+                algún voluntario. Puedes solicitar ayuda para ti o para otra
+                persona. Deberás rellenar tus datos de contacto y el horario en
+                que necesitas ayuda.
                 <strong>
                   <u>
                     Si eres población de riesgo evita el contacto físico con los
