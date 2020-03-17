@@ -12,16 +12,18 @@ import Panel from "../../components/Panel";
 import Header from "../../components/Header";
 import Button from "../../components/Button";
 
-import { GET_USER_QUERY } from "../../queries";
+import { ME_QUERY, GET_USER_QUERY } from "../../queries";
 
 const UserPage = () => {
   const router = useRouter();
   const email = decodeURIComponent(router.query.email as string);
+  const { data: meData } = useQuery(ME_QUERY);
   const { loading, error, data: userData } = useQuery(GET_USER_QUERY, {
     variables: { email }
   });
 
   const user = userData && userData.getUser;
+  const me = meData && meData.me;
 
   if (loading || !user) {
     return null;
@@ -31,7 +33,7 @@ const UserPage = () => {
 
   return (
     <>
-      <Header />
+      <Header email={me && me.email} />
       <Container mt={40} mb={40}>
         <UserPanel>
           <h1>Perfil de usuario</h1>
@@ -87,6 +89,7 @@ const UserPage = () => {
 export default withApollo({ ssr: true })(UserPage);
 
 const UserPanel = styled(Panel)`
+  align-items: flex-start;
   h1 {
     font-size: 20px;
     text-align: center;

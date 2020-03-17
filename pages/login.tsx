@@ -21,14 +21,16 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [login, { loading }] = useMutation(LOGIN_MUTATION);
+  const [loginError, setLoginError] = useState(false);
 
   const onLogin = async () => {
     try {
+      setLoginError(false);
       const result = await login({ variables: { email, password } });
       cookie.set("token", result.data.login);
       Router.push("/");
     } catch (e) {
-      console.log(e);
+      setLoginError(true);
     }
   };
 
@@ -48,6 +50,9 @@ const Login = () => {
               onChange={e => setPassword(e.target.value)}
             />
           </InputGroup>
+          {loginError && (
+            <LoginError>Email o contraseña incorrectos</LoginError>
+          )}
           <Button onClick={() => onLogin()}>Entrar</Button>
         </LoginPanel>
       </Container>
@@ -102,4 +107,9 @@ const InputGroup = styled.div`
     display: block;
     margin-bottom: 8px;
   }
+`;
+
+const LoginError = styled.div`
+  color: red;
+  margin-bottom: 20px;
 `;
