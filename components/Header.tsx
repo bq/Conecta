@@ -27,7 +27,7 @@ const Header: FC<IHeaderProps> = ({ email, hideLogin }) => {
           <h1>
             <Link href="/">
               <a>
-                <img src="/logo_header.jpeg" alt="Las Rozas Conecta"></img>
+                CONECTA
               </a>
             </Link>
           </h1>

@@ -136,11 +136,6 @@ const Home = () => {
             </OptionPanel>
           </Column>
         </Row>
-        <Row mb={20}>
-          <Column widt={1} mx={"auto"}>
-            <DiagramImage src="/diagram.jpeg" alt="Conecta diagram" />
-          </Column>
-        </Row>
       </Container>
     </>
   );
