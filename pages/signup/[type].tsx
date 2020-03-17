@@ -148,20 +148,8 @@ const Signup = () => {
                   2016/679, de 27 de abril de 2016, de Protección de Datos
                   Personales)
                 </p>
-                <p>
-                  Información Protección de Datos: Ayuntamiento de Las Rozas,
-                  Plaza Mayor 1. Correo electrónico:
-                  solicitudesARCO@lasrozas.es.
-                </p>
                 <p>FINALIDAD:</p>
-                <p>
-                  Elaboración de un directorio de empresas de Las Rozas.
-                  <br />
-                  Remitirle informaciones relacionadas con las actividades y
-                  servicios del Ayuntamiento de Las Rozas en el ámbito de la
-                  Educación, Cultura, Empleo, Emprendimiento, Innovación
-                  inclusive por medios electrónicos.
-                </p>
+                <p>Contactar voluntarios con gente que necesita ayuda</p>
                 <p>LEGITIMACIÓN: Consentimiento del interesado.</p>
                 <p>CESIONES: No se contemplan.</p>
                 <p>
