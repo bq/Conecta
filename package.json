@@ -16,7 +16,7 @@
     "apollo-client": "^2.6.8",
     "apollo-link-context": "^1.0.19",
     "apollo-link-http": "^1.5.16",
-    "apollo-server-micro": "^2.11.0",
+    "apollo-server-micro": "^2.14.2",
     "babel-plugin-emotion": "^10.0.29",
     "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
