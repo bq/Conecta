@@ -18,7 +18,7 @@
     "apollo-link-http": "^1.5.16",
     "apollo-server-micro": "^2.11.0",
     "babel-plugin-emotion": "^10.0.29",
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "graphql-tag": "^2.10.3",
     "isomorphic-unfetch": "^3.0.0",
